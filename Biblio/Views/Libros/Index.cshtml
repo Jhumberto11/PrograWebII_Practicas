@@ -1,0 +1,55 @@
+﻿@using Biblio.Models
+@{
+    List<Libro> libros = ViewBag.Libros;
+}
+
+
+<h1>@ViewBag.Nombre</h1>
+
+<h2>Libros</h2>
+
+
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Categoria</th>
+            <th>Disponible</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var libro in libros)
+        {
+            <tr>
+                <td>@libro.ID</td>
+                <td>@libro.Title</td>
+                <td>@libro.Autor</td>
+                <td>@libro.Categoria</td>
+                
+
+                <td>
+                    @if (libro.Disponible)
+                    {
+                        <span class="badge bg-success">Disponible</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">No Disponible</span>
+                    }
+                </td>
+
+                <td>@libro.Precio</td>
+            </tr>
+        }
+
+
+
+    </tbody>
+</table>
+

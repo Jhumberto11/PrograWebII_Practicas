@@ -1,0 +1,48 @@
+﻿@using Biblio.Models
+@{
+
+    List<Autor> autores = ViewBag.Autores;
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Pais</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Activo?</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach(var autor in autores)
+        {
+            <tr>
+                <td>@autor.Id</td>
+                <td>@autor.Name</td>
+                <td>@autor.Lastname</td>
+                <td>@autor.Country</td>
+                <td>@autor.Birthdate</td>
+                <td>
+                @if (autor.IsActive)
+                {
+                    <span class="badge bg-success">Activo</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Desactivado</span>
+
+                }
+                </td>
+                        
+                
+            </tr>
+        }
+
+
+
+    </tbody>
+
+  
+</table>
