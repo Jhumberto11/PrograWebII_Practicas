@@ -1,8 +1,34 @@
 ﻿@using Biblio.Models
 @{
-
+    ViewData["Title"] = "Listta de Autores";
     List<Autor> autores = ViewBag.Autores;
 }
+
+<h1>@ViewData["Title"]</h1>
+<p>Hay @autores.Count() autores registrados</p>
+
+<a asp-action="Create" class="btn btn-primary">Crear Autor</a>
+
+<div class="row">
+    @foreach(var autor in autores)
+    {
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>@autor.Name</h5>
+                    <h5>@autor.Lastname</h5>
+                    <h6>@autor.Country</h6>
+                    <p>Edad : @(DateTime.UtcNow.Year - autor.Birthdate.Year)</p>
+                    <a class ="btn btn-info" asp-action="Details" asp-route-id="@autor.Id">Ver</a>
+                    <a class="btn btn-secondary" asp-action="EditView" asp-route-id="@autor.Id">Editar Autor</a>
+                    <a class="btn btn-danger" asp-action="DeleteAutor" asp-route-id="@autor.Id">Eliminar Autor</a>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
 <table class="table table-striped">
     <thead>
         <tr>

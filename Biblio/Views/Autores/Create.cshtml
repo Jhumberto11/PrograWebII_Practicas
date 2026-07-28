@@ -1,0 +1,28 @@
+﻿@model Biblio.Models.Autor
+@{
+    ViewData["Title"] = "Autores";
+}
+
+
+<form asp-action="AddAutor" method="post">
+    <div class="mb-3">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name"></span>    
+    </div>
+    <div class="mb-3">
+        <label asp-for="Country"></label>
+        <input asp-for="Country" class="form-control"/>
+        <span asp-validation-for="Country"></span>    
+    </div>
+    <div class="mb-3">
+        <label asp-for="Birthdate"></label>
+        <input asp-for="Birthdate" class="form-control"/>
+        <span asp-validation-for="Birthdate"></span>    
+    </div>
+
+    <button type="submit" class="btn btn-success"> Crear</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+
+</form>
