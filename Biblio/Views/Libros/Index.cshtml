@@ -1,12 +1,46 @@
-﻿@using Biblio.Models
+﻿@model Libro
 @{
     List<Libro> libros = ViewBag.Libros;
 }
 
 
-<h1>@ViewBag.Nombre</h1>
 
-<h2>Libros</h2>
+
+<h1>Libros</h1>
+
+<a asp-action="CreateView" class="btn btn-light">Agregar Libro</a>
+
+<div class="row">
+    @foreach (var libro in libros)
+    {
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <img src="@Url.Content(string.IsNullOrWhiteSpace(libro.ImageURL)
+                             ? "~/images/libros/default.jpg"
+                             : libro.ImageURL)"
+                         alt="@libro.Title"
+                         width="150"
+                         height="200"
+                         />
+                    <h5>Titulo: @libro.Title</h5>
+                    <h6>Precio :$ @libro.Precio</h6>
+                    <h6>Year: @libro.Year</h6>
+                    <h6>Categoria :@libro.Categoria</h6>
+                    <h6>Autor :@libro.Autor</h6>
+                   
+                    <a class="btn btn-info" asp-action="DetailsLibro" asp-route-id="@libro.ID">Ver</a>
+                    <a class="btn btn-secondary" asp-action="EditViewLibro" asp-route-id="@libro.ID">Editar Libro</a>
+                    <a class="btn btn-danger" asp-action="DeleteViewLibro" asp-route-id="@libro.ID">Eliminar Libro</a>
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>
+
+
 
 
 

@@ -1,0 +1,41 @@
+﻿@model Libro
+
+<h1>Eliminar Libro</h1>
+
+<div class="alert alert-danger">
+    ¿Está seguro de que desea eliminar este libro?
+</div>
+
+<dl class="row">
+
+    <dt class="col-sm-3">Titulo</dt>
+    <dd>@Model.Title</dd>
+    
+    <dt class="col-sm-3">Autor</dt>
+    <dd>@Model.Autor</dd>
+
+    <dt class="col-sm-3">Precio</dt>
+    <dd>@Model.Precio</dd>
+    
+    <dt class="col-sm-3">Categoria</dt>
+    <dd>@Model.Categoria</dd>
+    
+    <dt class="col-sm-3">Year</dt>
+    <dd>@Model.Year</dd>
+
+    <form asp-action="Delete" method="post">
+
+        <input type="hidden" asp-for="ID" />
+
+        <button type="submit" class="btn btn-danger">
+            Eliminar
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+    
+
+</dl>

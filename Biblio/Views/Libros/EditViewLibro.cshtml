@@ -1,0 +1,43 @@
+﻿@model Libro
+
+<h1>Edicion de Libro</h1>
+<form asp-action="Edit" method="post">
+
+    <input asp-for="ID" type="hidden" />
+
+
+    <div class="mb-3">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Precio"></label>
+        <input asp-for="Precio" class="form-control" />
+        <span asp-validation-for="Precio"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Autor"></label>
+        <input asp-for="Autor" class="form-control" />
+        <span asp-validation-for="Autor"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Year"></label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Categoria"></label>
+        <input asp-for="Categoria" class="form-control" />
+        <span asp-validation-for="Categoria"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success"> Editar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+
+</form>

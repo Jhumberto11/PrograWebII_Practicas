@@ -10,7 +10,9 @@
 
         public string Categoria { get; set; }
         public decimal Precio { get; set; }
-        public bool Disponible { get; set; }
+        public bool Disponible { get; set; } = true;
+
+        public string? ImageURL { get; set; }
 
     }
 }

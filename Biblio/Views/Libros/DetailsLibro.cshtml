@@ -1,0 +1,38 @@
+﻿@model Libro
+@{
+    ViewData["Title"] = "Detalles de libros";
+
+
+    var imagen = string.IsNullOrWhiteSpace(Model.ImageURL)
+       ? "~/images/libros/default.jpg"
+       : Model.ImageURL;
+}
+
+<h1>@Model.Title</h1>
+
+<img src="@Url.Content(imagen)"
+     asp-append-version="true"
+     alt="Portada de @Model.Title"
+     width="150"
+     height="200"
+     style="object-fit: cover;" />
+
+<dl class="row">
+    
+    <dt>Precio</dt>
+    <dd>@Model.Precio</dd>
+
+    <dt>Categorias</dt>
+    <dd>@Model.Categoria</dd>
+
+    <dt>Autor</dt>
+    <dd>@Model.Autor</dd>
+
+    <dt>Year</dt>
+    <dd>@Model.Year</dd>
+
+
+    
+</dl>
+
+<a asp-action="Index" class="btn bg-primary">Volver</a>
