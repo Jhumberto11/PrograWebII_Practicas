@@ -29,3 +29,68 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    transition: 0.2s;
+}
+
+    .card:hover {
+        transform: translateY(-4px);
+    }
+
+.card-title {
+    font-weight: bold;
+}
+
+
+.about-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.about-header {
+    text-align: center;
+}
+
+.about-content {
+    display: flex;
+    gap: 20px;
+}
+
+.about-card {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+    }
+
+    .about-container {
+        padding: 15px;
+    }
+
+    .card {
+        margin-bottom: 10px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .about-container {
+        max-width: 750px;
+    }
+
+    .about-content {
+        gap: 15px;
+    }
+}

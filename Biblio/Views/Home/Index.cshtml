@@ -2,7 +2,115 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1>Sistema de gestion de Biblioteca</h1>
-    <p>Bienvenido al gestor de biblioteca.</p>
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-5">
+        <h1>Biblioteca Virtual</h1>
+        <p>
+            Consulta libros y autores disponibles en nuestra biblioteca.
+        </p>
+
+        <a class="btn btn-primary" asp-controller="Libros" asp-action="Index">
+            Ver libros
+        </a>
+    </div>
+
+
+
+    <div class="row justify-content-center g-4">
+
+      
+        <div class="col-12 col-md-5">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    <h3 class="card-title">Libros</h3>
+
+                    <p class="card-text">
+                        Consulta los libros registrados en la biblioteca.
+                    </p>
+
+                    <a asp-controller="Libros"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Ver libros
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-5">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    <h3 class="card-title">Autores</h3>
+
+                    <p class="card-text">
+                        Consulta los autores registrados en el sistema.
+                    </p>
+
+                    <a asp-controller="Autores"
+                       asp-action="Index"
+                       class="btn btn-success">
+                        Ver autores
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container mt-5">
+
+        <h2 class="text-center mb-3">Servicios de la Biblioteca</h2>
+        <div class="accordion" id="accordionBiblioteca">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#servicio1">
+                        Consulta de libros
+                    </button>
+                </h2>
+
+                <div id="servicio1"
+                     class="accordion-collapse collapse show"
+                     data-bs-parent="#accordionBiblioteca">
+
+                    <div class="accordion-body">
+                        Permite consultar los libros disponibles en la biblioteca.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#servicio2">
+                        Consulta de autores
+                    </button>
+                </h2>
+
+                <div id="servicio2"
+                     class="accordion-collapse collapse"
+                     data-bs-parent="#accordionBiblioteca">
+
+                    <div class="accordion-body">
+                        Permite conocer los autores registrados en el sistema.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="mt-5">
+        <partial name="About" />
+    </div>
 </div>
