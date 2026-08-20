@@ -15,32 +15,29 @@
 
     <section class="about-content">
 
-        <article class="about-card">
-            <h3>Libros y Autores</h3>
+        @await Html.PartialAsync("_infoCard", new InfoCard()
+        {
+            Title = "Nuestros Servicios",
+            Text = "Consulta libros y autores disponibles en la biblioteca"
+        })
 
-            <p>
-                Los usuarios pueden consultar los libros registrados
-                y conocer información sobre sus respectivos autores.
-            </p>
-        </article>
+        @await Html.PartialAsync("_InfoCard", new InfoCard()
+        {
+            Title = "Categorias",
+            Text = "Encuentra libros organizados por diferentes categorias"
+        })
 
-        <article class="about-card">
-            <h3>Categorías</h3>
+        @await Html.PartialAsync("_InfoCard", new InfoCard()
+        {
+            Title = "Autores",
+            Text = "Conoce informacion sobre los autores registrados"
+        })
 
-            <p>
-                Los libros pueden organizarse por categorías como
-                literatura, ciencia, historia, tecnología y educación.
-            </p>
-        </article>
-
-        <article class="about-card">
-            <h3>Servicios</h3>
-
-            <p>
-                La Biblioteca Virtual facilita la búsqueda y consulta
-                de información bibliográfica de manera rápida y sencilla.
-            </p>
-        </article>
+        @await Html.PartialAsync("_InfoCard", new InfoCard()
+        {
+            Title = "Libros",
+            Text = "Conoce informacion sobre los Libros diisponibles"
+        })
 
     </section>
 

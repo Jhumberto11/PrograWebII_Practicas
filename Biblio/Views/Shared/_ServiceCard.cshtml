@@ -1,0 +1,21 @@
+﻿@model ServiceCard
+
+<div class="card service-card">
+
+    <img src="@Model.ImageUrl"
+         class="card-img-top"
+         alt="@Model.Title">
+
+    <div class="card-body text-center">
+
+        <h3 class="card-title">
+            @Model.Title
+        </h3>
+
+        <p class="card-text">
+            @Model.Text
+        </p>
+
+    </div>
+
+</div>
