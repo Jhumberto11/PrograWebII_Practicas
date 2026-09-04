@@ -1,4 +1,5 @@
 ﻿using Biblio.Models;
+using Biblio.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
@@ -6,63 +7,22 @@ namespace Biblio.Controllers
 {
     public class AutoresController : Controller
     {
-        private static List<Autor> _autores = new List<Autor>()
-            {
-                 new Autor()
-                 {
-                     Id = 1,
-                     Name = "Gabriel",
-                     Lastname = "García Márquez",
-                     Country = "Colombia",
-                     Birthdate = new DateOnly(1927, 3, 6)
-                 },
+        private readonly IAutoresService _autores;
+        public AutoresController(IAutoresService service)
+        {
+            _autores = service;
+        }
 
-                 new Autor()
-                 {
-                     Id = 2,
-                     Name = "Isabel",
-                     Lastname = "Allende",
-                     Country = "Chile",
-                     Birthdate = new DateOnly(1942, 8, 2),
-                     IsActive = false
-                 },
-
-                 new Autor()
-                 {
-                     Id = 3,
-                     Name = "Jorge Luis",
-                     Lastname = "Borges",
-                     Country = "Argentina",
-                     Birthdate = new DateOnly(1899, 8, 24)
-                 },
-
-                 new Autor()
-                 {
-                     Id = 4,
-                     Name = "Miguel",
-                     Lastname = "Cervantes",
-                     Country = "España",
-                     Birthdate = new DateOnly(1547, 9, 29)
-                 },
-
-                 new Autor()
-                 {
-                     Id = 5,
-                     Name = "Mario",
-                     Lastname = "Vargas Llosa",
-                     Country = "Perú",
-                     Birthdate = new DateOnly(1936, 3, 28)
-                 }
-            };
+        
         public IActionResult Index()
         { 
-            ViewBag.Autores = _autores;
-            return View();
+            
+            return View(_autores.GetAllAutors());
         }
 
         public IActionResult Details(int id)
         {
-            var autor = _autores.FirstOrDefault(x => x.Id == id);
+            var autor = _autores.GetAutor(id);
             if(autor == null)
             {
                 return NotFound();
@@ -86,23 +46,23 @@ namespace Biblio.Controllers
                 return View(autor);
             }
 
-            if (_autores.Any())
+            if (_autores != null)
             {
-                autor.Id = _autores.Max(a => a.Id) + 1;
+                autor.Id = _autores.CountAutors();
             }
             else
             {
                 autor.Id = 1;
             }
 
-            _autores.Add(autor);
+            _autores.AddAutor(autor);
 
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult EditView(int id)
         {
-            var autor  = _autores.FirstOrDefault(a=> a.Id == id);
+            var autor  = _autores.GetAutor(id);
             if (autor == null)
             {
                 return NotFound();
@@ -121,7 +81,7 @@ namespace Biblio.Controllers
             }
 
 
-            var autor = _autores.FirstOrDefault(a => a.Id == autorUpdated.Id);
+            var autor = _autores.GetAutor(autorUpdated.Id); ;
             if (autor == null)
             {
                 return NotFound();
@@ -137,7 +97,7 @@ namespace Biblio.Controllers
         [HttpGet]
         public IActionResult DeleteAutor(int id)
         {
-            var autor = _autores.FirstOrDefault(a => a.Id == id);
+            var autor = _autores.GetAutor(id);
 
             if (autor == null)
             {
@@ -151,7 +111,7 @@ namespace Biblio.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteAutorConfirmed(int id)
         {
-            var autor = _autores.FirstOrDefault(a => a.Id == id);
+            var autor = _autores.GetAutor(id);
 
             if (autor == null)
             {

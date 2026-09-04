@@ -1,6 +1,6 @@
-﻿@model Libro
+﻿@model IEnumerable<Biblio.Models.Libro>
 @{
-    List<Libro> libros = ViewBag.Libros;
+    
 }
 
 
@@ -11,7 +11,7 @@
 <a asp-action="CreateView" class="btn btn-light">Agregar Libro</a>
 
 <div class="row">
-    @foreach (var libro in libros)
+    @foreach (var libro in Model)
     {
         <div class="col-md-6">
             <div class="card mb-3">
@@ -58,7 +58,7 @@
     </thead>
     <tbody>
 
-        @foreach (var libro in libros)
+        @foreach (var libro in Model)
         {
             <tr>
                 <td>@libro.ID</td>

@@ -1,16 +1,15 @@
-﻿@using Biblio.Models
+﻿@model ICollection<Autor>
 @{
-    ViewData["Title"] = "Lista de Autores";
-    List<Autor> autores = ViewBag.Autores;
+    
 }
 
 <h1>@ViewData["Title"]</h1>
-<p>Hay @autores.Count() autores registrados</p>
+
 
 <a asp-action="Create" class="btn btn-primary">Crear Autor</a>
 
 <div class="row">
-    @foreach(var autor in autores)
+    @foreach(var autor in Model)
     {
         <div class="col-md-6">
             <div class="card mb-3">
@@ -42,7 +41,7 @@
     </thead>
     <tbody>
 
-        @foreach(var autor in autores)
+        @foreach(var autor in Model)
         {
             <tr>
                 <td>@autor.Id</td>
