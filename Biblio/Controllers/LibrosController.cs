@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Biblio.Models;
 using Biblio.Repositories;
+using Biblio.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblio.Controllers
 {
@@ -8,15 +10,15 @@ namespace Biblio.Controllers
     {
         private readonly IReposotoryLibro _repositorio;
 
-
-        public LibrosController(IReposotoryLibro repositorio)
+        private readonly BiblioContext _context;
+        public LibrosController(BiblioContext context)
         {
-            _repositorio = repositorio;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var libros = _repositorio.GetAll();
+            var libros = await  _context.Libros.ToListAsync();
             return View(libros);
         }
 
@@ -33,35 +35,27 @@ namespace Biblio.Controllers
         //    return View(libro);
         //}
 
-        //public IActionResult CreateView()
-        //{
-        //    return View();
-        //}
+        public IActionResult CreateView()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryTokenAttribute]
-        //public IActionResult Create(Libro libro)
-        //{
+        [HttpPost]
+        [ValidateAntiForgeryTokenAttribute]
+        public IActionResult Create(Libro libro)
+        {
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    if (libros.Any())
-        //    {
-        //        libro.ID = libros.Max(l=> l.ID) + 1;
-        //    }
-        //    else
-        //    {
-        //        libro.ID = 1;
-        //    }
+            _context.Libros.Add(libro);
+            _context.SaveChangesAsync();
 
-        //    libros.Add(libro);
+            return RedirectToAction(nameof(Index));
 
-        //    return RedirectToAction(nameof(Index));
-
-        //}
+        }
 
         //    public IActionResult EditViewLibro(int Id)
         //    {

@@ -1,4 +1,6 @@
+using Biblio.Data;
 using Biblio.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IReposotoryLibro, RepositorioEnMemoria>();
 builder.Services.AddScoped<IAutoresService, AutorRepositoryAlternativo>();
+
+builder.Services.AddDbContext<BiblioContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BiblioDB"));
+});
 
 var app = builder.Build();
 

@@ -1,6 +1,8 @@
-﻿using Biblio.Models;
+﻿using Biblio.Data;
+using Biblio.Models;
 using Biblio.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
 namespace Biblio.Controllers
@@ -8,22 +10,31 @@ namespace Biblio.Controllers
     public class AutoresController : Controller
     {
         private readonly IAutoresService _autores;
-        public AutoresController(IAutoresService service)
+
+        private readonly BiblioContext _context;
+        public AutoresController(BiblioContext context)
         {
-            _autores = service;
+            _context = context;
         }
+
+
+        //public AutoresController(IAutoresService service)
+        //{
+        //    _autores = service;
+        //}
 
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         { 
-            
-            return View(_autores.GetAllAutors());
+            var autores = await _context.Autores.ToListAsync(); 
+            return View(autores);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var autor = _autores.GetAutor(id);
-            if(autor == null)
+            var autor = await _context.Autores.FindAsync(id);
+
+            if (autor == null)
             {
                 return NotFound();
             }
@@ -39,23 +50,16 @@ namespace Biblio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryTokenAttribute]
-        public IActionResult AddAutor(Autor autor)
+        public async Task<IActionResult> AddAutor(Autor autor)
         {
             if (!ModelState.IsValid)
             {
                 return View(autor);
             }
 
-            if (_autores != null)
-            {
-                autor.Id = _autores.CountAutors();
-            }
-            else
-            {
-                autor.Id = 1;
-            }
+            _context.Autores.Add(autor);
+            await _context.SaveChangesAsync();
 
-            _autores.AddAutor(autor);
 
             return RedirectToAction(nameof(Index));
         }
