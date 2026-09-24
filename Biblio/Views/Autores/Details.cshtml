@@ -15,7 +15,13 @@
     <dt>Edad</dt>
     <dd>@(DateTime.UtcNow.Year - Model.Birthdate.Year)</dd>
 
+
+    <div class="d-flex gap-2">
+        <a asp-controller="Autores" asp-action="EditView" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-controller="Autores" asp-action="DeleteAutor" asp-route-id="@Model.Id" class="btn btn-danger">Eliminar</a>
+        <a asp-controller="Autores" asp-action="Index" class="btn bg-primary  ms-auto">Volver</a>
+    </div>
+
     
 </dl>
 
-<a asp-action="Index" class="btn bg-primary">Volver</a>

@@ -64,19 +64,19 @@ namespace Biblio.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult EditView(int id)
+        public async Task<IActionResult> EditView(int id)
         {
-            var autor  = _autores.GetAutor(id);
+            var autor = await _context.Autores.FindAsync(id);
             if (autor == null)
             {
                 return NotFound();
             }
-            return View(autor); 
+            return View(autor);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditAutor(Autor autorUpdated)
+        public async Task<IActionResult> EditAutor(Autor autorUpdated)
         {
 
             if (!ModelState.IsValid)
@@ -85,7 +85,7 @@ namespace Biblio.Controllers
             }
 
 
-            var autor = _autores.GetAutor(autorUpdated.Id); ;
+            var autor = await _context.Autores.FindAsync(autorUpdated.Id);
             if (autor == null)
             {
                 return NotFound();
@@ -96,12 +96,16 @@ namespace Biblio.Controllers
             autor.Lastname = autorUpdated.Lastname;
             autor.Country = autorUpdated.Country;
 
+            _context.Update(autor);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
-        public IActionResult DeleteAutor(int id)
+
+
+        public async Task<IActionResult> DeleteAutor(int id)
         {
-            var autor = _autores.GetAutor(id);
+            var autor = await _context.Autores.FindAsync(id);
 
             if (autor == null)
             {
@@ -113,16 +117,17 @@ namespace Biblio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteAutorConfirmed(int id)
+        public async Task<IActionResult> DeleteAutorConfirmed(int id)
         {
-            var autor = _autores.GetAutor(id);
+            var autor = await _context.Autores.FindAsync(id);
 
             if (autor == null)
             {
                 return NotFound();
             }
 
-            _autores.Remove(autor);
+            _context.Autores.Remove(autor);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

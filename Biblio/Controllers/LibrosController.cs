@@ -23,17 +23,16 @@ namespace Biblio.Controllers
         }
 
 
-        //public IActionResult DetailsLibro(int Id)
-        //{
-        //    var libros = _repositorio.GetAll();
-        //    var libro = libros.FirstOrDefault(x => x.ID == Id);
-        //    if (libro == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> DetailsLibro(int Id)
+        {
+            var libro = await _context.Libros.FindAsync(Id);
+            if (libro == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(libro);
-        //}
+            return View(libro);
+        }
 
         public IActionResult CreateView()
         {
@@ -57,56 +56,57 @@ namespace Biblio.Controllers
 
         }
 
-        //    public IActionResult EditViewLibro(int Id)
-        //    {
-        //        var libros = _repositorio.GetAll();
-        //        var libro = libros.FirstOrDefault(l => l.ID == Id);
-        //        if (libro == null) return BadRequest();
-        //        return View(libro);
-        //    }
+        public async Task<IActionResult> EditViewLibro(int Id)
+        {
+            var libro = await _context.Libros.FindAsync(Id);
+            
+            if (libro == null) return BadRequest();
+            return View(libro);
+        }
 
-        //    public IActionResult Edit(Libro libroUpdated)
-        //    {
-        //        var libros = _repositorio.GetAll();
+        public async Task<IActionResult> Edit(Libro libroUpdated)
+        {
+            var libro = await _context.Libros.FindAsync(libroUpdated.ID);
 
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View(libroUpdated);
-        //        }
+            if (!ModelState.IsValid)
+            {
+                return View(libroUpdated);
+            }
+
+            if (libro == null)
+            {
+                return NotFound();
+            }
+
+            libro.Title = libroUpdated.Title;
+            libro.Autor = libroUpdated.Autor;
+            libro.Categoria = libroUpdated.Categoria;
+            libro.Precio = libroUpdated.Precio;
+            libro.Categoria = libroUpdated.Categoria;
+
+            _context.Libros.Update(libro);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DeleteViewLibro(int Id)
+        {
+            var libro = await _context.Libros.FindAsync(Id);
+            if (libro == null) return BadRequest();
+            return View(libro);
+        }
+        public async Task<IActionResult> Delete(int ID)
+        {
+            var libro = await _context.Libros.FindAsync(ID);
+            if (libro == null) return NotFound();
+
+            _context.Libros.Remove(libro);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
 
-        //        var libro = libros.FirstOrDefault(a => a.ID == libroUpdated.ID);
-        //        if (libro == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        libro.Title = libroUpdated.Title;
-        //        libro.Autor = libroUpdated.Autor;
-        //        libro.Categoria = libroUpdated.Categoria;
-        //        libro.Precio = libroUpdated.Precio;
-        //        libro.Categoria = libroUpdated.Categoria;
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    public IActionResult DeleteViewLibro(int Id)
-        //    {
-        //        var libros = _repositorio.GetAll();
-        //        var libro = libros.FirstOrDefault(l => l.ID == Id);
-        //        if (libro == null) return BadRequest();
-        //        return View(libro);
-        //    }
-        //    public IActionResult Delete(int ID)
-        //    {
-        //        var libros = _repositorio.GetAll();
-        //        var libro = libros.FirstOrDefault(l=> l.ID == ID);
-        //        if(libro == null) return NotFound();
-        //        ///libros.Remove(libro);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-
-        //}
     }
 }
+
