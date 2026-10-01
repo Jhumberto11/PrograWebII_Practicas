@@ -1,12 +1,14 @@
 ﻿
 
 using Biblio.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Biblio.Data
 {
-    public class BiblioContext : DbContext
+    public class BiblioContext : IdentityDbContext<IdentityUser>
     {
         public BiblioContext(DbContextOptions<BiblioContext> options) : base(options)
         {
