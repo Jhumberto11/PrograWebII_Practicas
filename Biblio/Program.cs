@@ -6,7 +6,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(
+    options =>
+    {
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+        options.Lockout.AllowedForNewUsers = true;
+    })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<BiblioContext>()
     .AddDefaultTokenProviders();
 
@@ -30,6 +37,80 @@ builder.Services.AddDbContext<BiblioContext>(options =>
 var app = builder.Build();
 
 
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider
+        .GetRequiredService<RoleManager<IdentityRole>>();
+
+    var userManager = scope.ServiceProvider
+        .GetRequiredService<UserManager<IdentityUser>>();
+
+    string[] roles = { "Administrador", "Lector" };
+
+    foreach (var rol in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(rol))
+        {
+            var resultado = await roleManager.CreateAsync(
+                new IdentityRole(rol));
+
+            if (!resultado.Succeeded)
+            {
+                throw new Exception(
+                    "No se pudo crear el rol: " + rol);
+            }
+        }
+    }
+
+    var administradorId = app.Configuration["AdministradorId"];
+
+    if (!string.IsNullOrWhiteSpace(administradorId))
+    {
+        var administrador = await userManager
+            .FindByIdAsync(administradorId);
+
+        if (administrador == null)
+        {
+            throw new Exception(
+                "No se encontró el usuario administrador.");
+        }
+
+        if (!await userManager.IsInRoleAsync(
+            administrador, "Administrador"))
+        {
+            var resultado = await userManager.AddToRoleAsync(
+                administrador, "Administrador");
+
+            if (!resultado.Succeeded)
+            {
+                throw new Exception(
+                    "No se pudo asignar el administrador.");
+            }
+        }
+    }
+
+    var usuarios = await userManager.Users.ToListAsync();
+
+    foreach (var usuario in usuarios)
+    {
+        var rolesUsuario = await userManager
+            .GetRolesAsync(usuario);
+
+        if (rolesUsuario.Count == 0)
+        {
+            var resultado = await userManager.AddToRoleAsync(
+                usuario, "Lector");
+
+            if (!resultado.Succeeded)
+            {
+                throw new Exception(
+                    "No se pudo asignar el rol Lector.");
+            }
+        }
+    }
+}
+
+
 
 
 
@@ -44,7 +125,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+
 app.UseStaticFiles();
 
 app.MapStaticAssets();

@@ -21,31 +21,36 @@
                 <li class="nav-item">
                     <a class="nav-link px-3" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" asp-controller="Categorias" asp-action="Index">
-                        Categorias
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" asp-controller="Libros" asp-action="Index">
-                        Libros
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" asp-controller="Autores" asp-action="Index">
-                        Autores
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" asp-controller="Home" asp-action="Usuarios">
-                        Usuarios
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" asp-controller="Home" asp-action="Prestamos">
-                        Préstamos
-                    </a>
-                </li>
+
+                @if(User.Identity?.IsAuthenticated == true)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Categorias" asp-action="Index">
+                            Categorias
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Libros" asp-action="Index">
+                            Libros
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Autores" asp-action="Index">
+                            Autores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Home" asp-action="Usuarios">
+                            Usuarios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" asp-controller="Home" asp-action="Prestamos">
+                            Préstamos
+                        </a>
+                    </li>
+                }
+               
                 <li class="nav-item">
                     <a class="nav-link px-3" asp-controller="Home" asp-action="About">
                         Acerca de

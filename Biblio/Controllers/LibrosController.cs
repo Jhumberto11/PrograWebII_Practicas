@@ -3,9 +3,11 @@ using Biblio.Models;
 using Biblio.Repositories;
 using Biblio.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biblio.Controllers
 {
+    [Authorize]
     public class LibrosController : Controller
     {
         private readonly IReposotoryLibro _repositorio;
@@ -15,14 +17,14 @@ namespace Biblio.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Administrador,Lector")]
         public async Task<IActionResult> Index()
         {
             var libros = await  _context.Libros.ToListAsync();
             return View(libros);
         }
 
-
+        [Authorize(Roles = "Administrador,Lector")]
         public async Task<IActionResult> DetailsLibro(int Id)
         {
             var libro = await _context.Libros.FindAsync(Id);
@@ -33,12 +35,12 @@ namespace Biblio.Controllers
 
             return View(libro);
         }
-
+        [Authorize(Roles = "Administrador")]
         public IActionResult CreateView()
         {
             return View();
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryTokenAttribute]
         public IActionResult Create(Libro libro)
@@ -55,7 +57,7 @@ namespace Biblio.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> EditViewLibro(int Id)
         {
             var libro = await _context.Libros.FindAsync(Id);
@@ -63,7 +65,7 @@ namespace Biblio.Controllers
             if (libro == null) return BadRequest();
             return View(libro);
         }
-
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Libro libroUpdated)
         {
             var libro = await _context.Libros.FindAsync(libroUpdated.ID);
@@ -89,6 +91,7 @@ namespace Biblio.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = "Administrador")]
 
         public async Task<IActionResult> DeleteViewLibro(int Id)
         {
@@ -96,6 +99,8 @@ namespace Biblio.Controllers
             if (libro == null) return BadRequest();
             return View(libro);
         }
+
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int ID)
         {
             var libro = await _context.Libros.FindAsync(ID);

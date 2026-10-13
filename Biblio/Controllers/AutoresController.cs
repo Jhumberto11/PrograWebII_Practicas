@@ -1,12 +1,14 @@
 ﻿using Biblio.Data;
 using Biblio.Models;
 using Biblio.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
 namespace Biblio.Controllers
 {
+    [Authorize]
     public class AutoresController : Controller
     {
         private readonly IAutoresService _autores;
@@ -23,12 +25,14 @@ namespace Biblio.Controllers
         //    _autores = service;
         //}
 
-        
+        [Authorize(Roles = "Administrador,Lector")]
+
         public async Task<IActionResult> Index()
         { 
             var autores = await _context.Autores.ToListAsync(); 
             return View(autores);
         }
+        [Authorize(Roles = "Administrador,Lector")]
 
         public async Task<IActionResult> Details(int id)
         {
@@ -41,13 +45,13 @@ namespace Biblio.Controllers
             return View(autor);
 
         }
-
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
         }
 
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryTokenAttribute]
         public async Task<IActionResult> AddAutor(Autor autor)
@@ -63,7 +67,7 @@ namespace Biblio.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> EditView(int id)
         {
             var autor = await _context.Autores.FindAsync(id);
@@ -73,7 +77,7 @@ namespace Biblio.Controllers
             }
             return View(autor);
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAutor(Autor autorUpdated)
@@ -102,7 +106,7 @@ namespace Biblio.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteAutor(int id)
         {
             var autor = await _context.Autores.FindAsync(id);
@@ -114,7 +118,7 @@ namespace Biblio.Controllers
 
             return View(autor);
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAutorConfirmed(int id)

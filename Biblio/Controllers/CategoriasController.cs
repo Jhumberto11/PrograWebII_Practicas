@@ -1,10 +1,12 @@
 ﻿using Biblio.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.FileProviders.Physical;
 
 namespace Biblio.Controllers
 {
+    [Authorize]
     public class CategoriasController : Controller
     {
         private readonly string _connectionString;
