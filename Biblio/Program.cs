@@ -45,7 +45,7 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider
         .GetRequiredService<UserManager<IdentityUser>>();
 
-    string[] roles = { "Administrador", "Lector" };
+    string[] roles = { "Administrador", "Usuario", "Bibliotecario" };
 
     foreach (var rol in roles)
     {
@@ -96,10 +96,13 @@ using (var scope = app.Services.CreateScope())
         var rolesUsuario = await userManager
             .GetRolesAsync(usuario);
 
+        if (usuario.Email.Contains("@biblioteca.sv")){
+            var resultado = await userManager.AddToRoleAsync(usuario, "Bibliotecario");
+        }
         if (rolesUsuario.Count == 0)
         {
             var resultado = await userManager.AddToRoleAsync(
-                usuario, "Lector");
+                usuario, "Usuario");
 
             if (!resultado.Succeeded)
             {
@@ -108,6 +111,10 @@ using (var scope = app.Services.CreateScope())
             }
         }
     }
+
+    
+
+
 }
 
 

@@ -8,7 +8,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="mb-0">Libros</h1>
 
-    @if (User.IsInRole("Administrador"))
+    @if (User.IsInRole("Administrador") || User.IsInRole("Bibliotecario") )
     {
 
         <a asp-action="CreateView" class="btn btn-success">
@@ -40,7 +40,7 @@
                             Ver
                         </a>
 
-                        @if (User.IsInRole("Administrador"))
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Bibliotecario"))
                         {
                             <a class="btn btn-secondary" asp-action="EditViewLibro" asp-route-id="@libro.ID">
                                 Editar Libro

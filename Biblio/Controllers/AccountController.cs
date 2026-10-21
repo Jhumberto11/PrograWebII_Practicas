@@ -108,7 +108,7 @@ namespace Biblio.Controllers
             {
 
                 var resultadoRol = await _userManager
-                .AddToRoleAsync(user, "Lector");
+                .AddToRoleAsync(user, "Usuario");
 
                 if (!resultadoRol.Succeeded)
                 {
