@@ -10,6 +10,7 @@ namespace Biblio.Controllers
 {
     public class AccountController : Controller
     {
+        
 
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
