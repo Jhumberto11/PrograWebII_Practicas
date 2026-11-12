@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Reportes";
+}
+
+<div class="container mt-4">
+    <h2>Reportes de libros</h2>
+
+    <p>
+        Desde esta sección puedes generar un reporte de los libros registrados
+        en BibliotecaMVC y descargarlo en formato PDF o Excel.
+    </p>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Filtros del reporte</h5>
+
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label for="autor" class="form-label">Autor</label>
+                        <input type="text"
+                               id="autor"
+                               name="autor"
+                               class="form-control"
+                               placeholder="Todos los autores" />
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label for="categoria" class="form-label">Categoría</label>
+                        <input type="text"
+                               id="categoria"
+                               name="categoria"
+                               class="form-control"
+                               placeholder="Todas las categorías" />
+                    </div>
+                </div>
+
+                <p class="text-muted">
+                    Si dejas los filtros vacíos, se incluirán todos los libros.
+                    Puedes escribir una parte del nombre del autor o de la categoría.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="submit"
+                            formaction="@Url.Action("GenerarPdf", "Reportes")"
+                            class="btn btn-danger">
+                        Generar reporte PDF
+                    </button>
+
+                    <button type="submit"
+                            formaction="@Url.Action("ExportarExcel", "Reportes")"
+                            class="btn btn-success">
+                        Exportar a Excel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

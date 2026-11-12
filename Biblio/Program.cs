@@ -1,9 +1,12 @@
 using Biblio.Data;
 using Biblio.Repositories;
 using Microsoft.AspNetCore.Identity;
+using QuestPDF.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(
